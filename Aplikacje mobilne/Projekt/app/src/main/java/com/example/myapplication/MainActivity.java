@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -32,10 +33,12 @@ public class MainActivity extends AppCompatActivity implements OnMovieClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_main);
         // Sprawdzenie, czy użytkownik jest zalogowany
-        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs2", MODE_PRIVATE);
         String accessToken = sharedPreferences.getString("access_token", null);
+        Log.d("EditProfileActivity", "Access Token FROM MAIN  ACTIV: " + accessToken);
         if (accessToken == null) {
             // Jeśli nie ma tokena dostępu, przejdź do LoginActivity
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
@@ -43,7 +46,8 @@ public class MainActivity extends AppCompatActivity implements OnMovieClickListe
             return;
         }
 
-        setContentView(R.layout.activity_main);
+
+
 
         search_view = findViewById(R.id.search_view);
         recycler_view_home = findViewById(R.id.recycler_view_home);
@@ -80,12 +84,6 @@ public class MainActivity extends AppCompatActivity implements OnMovieClickListe
     @Override
     protected void onStop() {
         super.onStop();
-        // Usuń tokeny uwierzytelniające
-        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove("access_token");
-        editor.remove("refresh_token");
-        editor.apply();
     }
 
     private final OnSearchApiListener listener = new OnSearchApiListener() {

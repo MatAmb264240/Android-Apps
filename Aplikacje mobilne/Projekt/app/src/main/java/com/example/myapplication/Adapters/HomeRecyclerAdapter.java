@@ -33,7 +33,6 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeViewHolder>{
     @Override
     public HomeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new HomeViewHolder(LayoutInflater.from(context).inflate(R.layout.home_movies_list, parent, false));
-
     }
 
     @Override
@@ -47,7 +46,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeViewHolder>{
             public void onClick(View v) {
                 listener.onMovieClicked(list.get(position).getImdbID());
             }
-    });
+        });
     }
 
     @Override
@@ -55,17 +54,16 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeViewHolder>{
         return list.size();
     }
 }
-class HomeViewHolder extends RecyclerView.ViewHolder{
+
+class HomeViewHolder extends RecyclerView.ViewHolder {
     ImageView imageView_poster;
     TextView textView_movie;
     CardView home_container;
 
-    public HomeViewHolder(@NonNull View itemView)
-    {
+    public HomeViewHolder(@NonNull View itemView) {
         super(itemView);
         imageView_poster = itemView.findViewById(R.id.imageView_poster);
         textView_movie = itemView.findViewById(R.id.textView_movie);
         home_container = itemView.findViewById(R.id.home_container);
-
     }
 }

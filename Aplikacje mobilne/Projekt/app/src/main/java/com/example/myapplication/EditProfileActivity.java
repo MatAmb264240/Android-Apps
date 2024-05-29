@@ -14,7 +14,6 @@ import com.example.myapplication.Register.RetrofitClient;
 import com.example.myapplication.UserProfile.UserProfileRequest;
 import com.example.myapplication.UserProfile.UserProfileResponse;
 
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,17 +24,24 @@ public class EditProfileActivity extends AppCompatActivity {
     private Button buttonSave;
     private String accessToken;
     private String refreshToken;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-
         // Pobranie tokenów z SharedPreferences
-        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs2", MODE_PRIVATE);
         accessToken = sharedPreferences.getString("access_token", null);
         refreshToken = sharedPreferences.getString("refresh_token", null);
 
+        // Debugging statements to check token values
+        Log.d("EditProfileActivity", "Access Token: " + accessToken);
+        Log.d("EditProfileActivity", "Refresh Token: " + refreshToken);
+
+        if (accessToken == null) {
+            Log.e("EditProfileActivity", "Access Token is null in onCreate");
+        }
 
         editTextFirstName = findViewById(R.id.editTextFirstName);
         editTextLastName = findViewById(R.id.editTextLastName);
@@ -51,6 +57,14 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()) {
                     Toast.makeText(EditProfileActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Log.d("EditProfileActivity", "Access Token before updateProfile: " + accessToken);
+
+                if (accessToken == null) {
+                    Log.e("EditProfileActivity", "Access Token is null before calling updateProfile");
+                    Toast.makeText(EditProfileActivity.this, "Error: Access Token is null", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -73,7 +87,8 @@ public class EditProfileActivity extends AppCompatActivity {
         call.enqueue(new Callback<UserProfileResponse>() {
             @Override
             public void onResponse(Call<UserProfileResponse> call, Response<UserProfileResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null)
+                {
                     Toast.makeText(EditProfileActivity.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {

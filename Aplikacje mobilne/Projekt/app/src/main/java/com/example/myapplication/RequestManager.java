@@ -9,6 +9,7 @@ import com.example.myapplication.Listeners.OnSearchApiListener;
 import com.example.myapplication.Login.LoginCallback;
 import com.example.myapplication.Login.LoginRequest;
 import com.example.myapplication.Login.LoginResponse;
+import com.example.myapplication.Register.Api;
 import com.example.myapplication.Search.SearchResponse;
 
 import java.util.concurrent.TimeUnit;
@@ -52,7 +53,7 @@ public class RequestManager {
     }
 
     public void login(String username, String password, final LoginCallback callback) {
-        AuthService authService = retrofit.create(AuthService.class);
+        Api authService = retrofit.create(Api.class);
         Call<LoginResponse> call = authService.login(new LoginRequest(username, password));
 
         call.enqueue(new Callback<LoginResponse>() {
@@ -72,10 +73,6 @@ public class RequestManager {
         });
     }
 
-    public interface AuthService {
-        @POST("/api/token/")
-        Call<LoginResponse> login(@Body LoginRequest request);
-    }
 
     public void searchMovies(OnSearchApiListener listener, String movie_name) {
         getMovies getMovies = omdbRetrofit.create(RequestManager.getMovies.class);

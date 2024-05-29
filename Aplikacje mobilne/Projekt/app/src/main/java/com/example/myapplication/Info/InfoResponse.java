@@ -1,12 +1,13 @@
 package com.example.myapplication.Info;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class InfoResponse {
+public class InfoResponse implements Serializable {
 
     @SerializedName("Title")
     @Expose
@@ -58,14 +59,16 @@ public class InfoResponse {
     private String metascore;
     @SerializedName("imdbRating")
     @Expose
+    private String imdbID;
+    @SerializedName("Type")
+/*
+    @Expose
     private String imdbRating;
     @SerializedName("imdbVotes")
     @Expose
     private String imdbVotes;
     @SerializedName("imdbID")
-    @Expose
-    private String imdbID;
-    @SerializedName("Type")
+
     @Expose
     private String type;
     @SerializedName("DVD")
@@ -83,6 +86,7 @@ public class InfoResponse {
     @SerializedName("Response")
     @Expose
     private String response;
+*/
 
     public String getTitle() {
         return title;
@@ -212,7 +216,15 @@ public class InfoResponse {
         this.metascore = metascore;
     }
 
-    public String getImdbRating() {
+    public String getImdbID() {
+        return imdbID;
+    }
+
+    public void setImdbID(String imdbID) {
+        this.imdbID = imdbID;
+    }
+
+/*    public String getImdbRating() {
         return imdbRating;
     }
 
@@ -228,13 +240,7 @@ public class InfoResponse {
         this.imdbVotes = imdbVotes;
     }
 
-    public String getImdbID() {
-        return imdbID;
-    }
 
-    public void setImdbID(String imdbID) {
-        this.imdbID = imdbID;
-    }
 
     public String getType() {
         return type;
@@ -282,6 +288,6 @@ public class InfoResponse {
 
     public void setResponse(String response) {
         this.response = response;
-    }
+    }*/
 
 }

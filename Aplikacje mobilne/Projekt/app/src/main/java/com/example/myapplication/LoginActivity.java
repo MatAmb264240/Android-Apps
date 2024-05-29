@@ -1,8 +1,10 @@
 package com.example.myapplication;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +19,7 @@ import com.example.myapplication.Login.LoginResponse;
 public class LoginActivity extends AppCompatActivity {
     private EditText editTextUsername, editTextPassword;
     private Button buttonLogin, buttonRegister;
-
+    private ProgressDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonLogin = findViewById(R.id.buttonLogin);
         buttonRegister = findViewById(R.id.buttonRegister);
-
+        dialog = new ProgressDialog(this);
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.setTitle("Please wait");
+                dialog.show();
                 String username = editTextUsername.getText().toString().trim();
                 String password = editTextPassword.getText().toString().trim();
 
@@ -50,16 +54,25 @@ public class LoginActivity extends AppCompatActivity {
                 requestManager.login(username, password, new LoginCallback() {
                     @Override
                     public void onSuccess(LoginResponse response) {
+                        dialog.dismiss();
                         // Store tokens and navigate to the next screen
                         String accessToken = response.getAccess();
                         String refreshToken = response.getRefresh();
+                        // Log tokens to check their values
 
                         // Save tokens in SharedPreferences
-                        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+                        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs2", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("access_token", accessToken);
                         editor.putString("refresh_token", refreshToken);
-                        editor.apply();
+                        editor.commit();
+
+
+                        // Debugging statements to check token values
+                        Log.d("LoginActivity", "Access Token (from response): " + accessToken);
+                        Log.d("LoginActivity", "Refresh Token (from response): " + refreshToken);
+                        Log.d("LoginActivity", "Access Token (from SharedPreferences): " + sharedPreferences.getString("access_token", null));
+                        Log.d("LoginActivity", "Refresh Token (from SharedPreferences): " + sharedPreferences.getString("refresh_token", null));
 
                         // Navigate to MainActivity
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -68,6 +81,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(String message) {
+                        dialog.dismiss();
                         Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
                     }
                 });
