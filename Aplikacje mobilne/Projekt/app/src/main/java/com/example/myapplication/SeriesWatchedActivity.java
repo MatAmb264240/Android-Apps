@@ -7,7 +7,7 @@ import retrofit2.Call;
 
 public class SeriesWatchedActivity extends WatchedActivity {
     @Override
-    protected Call<MoviesResponse> getApiCall(Api apiService) {
-        return apiService.getSeriesWatched("admin");
+    protected Call<MoviesResponse> getApiCall(Api apiService, String username) {
+        return apiService.getSeriesWatched(username);
     }
 }

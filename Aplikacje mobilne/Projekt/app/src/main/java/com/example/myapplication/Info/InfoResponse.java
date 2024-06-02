@@ -30,6 +30,8 @@ public class InfoResponse implements Serializable {
     @SerializedName("Director")
     @Expose
     private String director;
+
+
     @SerializedName("Writer")
     @Expose
     private String writer;
@@ -48,9 +50,16 @@ public class InfoResponse implements Serializable {
     @SerializedName("Awards")
     @Expose
     private String awards;
-    @SerializedName("Poster")
+    @SerializedName("Poster_url")
     @Expose
     private String poster;
+
+    @SerializedName("imdbID")
+    @Expose
+    private String imdbID;
+    @SerializedName("Type")
+    @Expose
+    private String type;
     @SerializedName("Ratings")
     @Expose
     private List<Rating> ratings = null;
@@ -59,18 +68,17 @@ public class InfoResponse implements Serializable {
     private String metascore;
     @SerializedName("imdbRating")
     @Expose
-    private String imdbID;
-    @SerializedName("Type")
-/*
-    @Expose
     private String imdbRating;
+
+
+/*
+
     @SerializedName("imdbVotes")
     @Expose
     private String imdbVotes;
     @SerializedName("imdbID")
 
-    @Expose
-    private String type;
+
     @SerializedName("DVD")
     @Expose
     private String dVD;

@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements OnMovieClickListe
 
         search_view = findViewById(R.id.search_view);
         recycler_view_home = findViewById(R.id.recycler_view_home);
-        buttonAccount = findViewById(R.id.buttonAccount); // Upewnij się, że to jest poprawne przypisanie
+        buttonAccount = findViewById(R.id.buttonAccount);
 
         dialog = new ProgressDialog(this);
 

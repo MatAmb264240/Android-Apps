@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -27,7 +29,8 @@ public abstract class WatchedActivity extends AppCompatActivity implements OnWat
     protected RecyclerView recyclerView;
     protected MovieAdapter movieAdapter;
     protected List<InfoResponse> moviesList;
-
+    String username;
+    ProgressDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +43,15 @@ public abstract class WatchedActivity extends AppCompatActivity implements OnWat
         movieAdapter = new MovieAdapter(moviesList, this);
         recyclerView.setAdapter(movieAdapter);
 
-        // Fetch movies or series from backend
+        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs2", MODE_PRIVATE);
+        username = sharedPreferences.getString("username", null);
+
+        if (username == null) {
+            startActivity(new Intent(WatchedActivity.this, LoginActivity.class));
+            finish();
+            return;
+        }
+
         fetchWatchedItems();
     }
 
@@ -53,7 +64,7 @@ public abstract class WatchedActivity extends AppCompatActivity implements OnWat
 
     private void fetchWatchedItems() {
         Api apiService = RetrofitClient.getInstance(this).getApi();
-        Call<MoviesResponse> call = getApiCall(apiService);
+        Call<MoviesResponse> call = getApiCall(apiService, username);
 
         call.enqueue(new Callback<MoviesResponse>() {
             @Override
@@ -73,5 +84,5 @@ public abstract class WatchedActivity extends AppCompatActivity implements OnWat
         });
     }
 
-    protected abstract Call<MoviesResponse> getApiCall(Api apiService);
+    protected abstract Call<MoviesResponse> getApiCall(Api apiService, String username);
 }

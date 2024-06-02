@@ -11,6 +11,8 @@ import com.example.myapplication.Login.LoginRequest;
 import com.example.myapplication.Login.LoginResponse;
 import com.example.myapplication.Register.Api;
 import com.example.myapplication.Search.SearchResponse;
+import com.example.myapplication.UserProfile.Watched.DefaultResponse;
+import com.example.myapplication.UserProfile.Watched.ReviewRequest;
 
 import java.util.concurrent.TimeUnit;
 
@@ -21,10 +23,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
-import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public class RequestManager {
@@ -48,8 +48,14 @@ public class RequestManager {
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
+    private Api api = retrofit.create(Api.class);
+
     public RequestManager(Context context) {
         this.context = context;
+    }
+
+    public Api getApi() {
+        return api;
     }
 
     public void login(String username, String password, final LoginCallback callback) {
@@ -73,6 +79,11 @@ public class RequestManager {
         });
     }
 
+    public void addReview(int userId, int movieId, String imdbID, String text, int rate, InfoResponse movie,  Callback<DefaultResponse> callback) {
+        ReviewRequest request = new ReviewRequest(userId, movieId, imdbID, text, rate, movie);
+        api.addReview(request).enqueue(callback);
+
+    }
 
     public void searchMovies(OnSearchApiListener listener, String movie_name) {
         getMovies getMovies = omdbRetrofit.create(RequestManager.getMovies.class);

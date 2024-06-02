@@ -60,7 +60,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     return;
                 }
 
-                Log.d("EditProfileActivity", "Access Token before updateProfile: " + accessToken);
+                //Log.d("EditProfileActivity", "Access Token before updateProfile: " + accessToken);
 
                 if (accessToken == null) {
                     Log.e("EditProfileActivity", "Access Token is null before calling updateProfile");

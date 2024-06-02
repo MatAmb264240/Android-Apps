@@ -2,6 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@color/black"
     android:padding="8dp">
 
     <ImageView
@@ -16,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Title"
+        android:textColor="@color/yellow"
         android:textStyle="bold"
         android:paddingTop="4dp" />
 
@@ -24,5 +26,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Year"
+        android:textColor="@color/yellow"
         android:paddingBottom="4dp" />
 </LinearLayout>

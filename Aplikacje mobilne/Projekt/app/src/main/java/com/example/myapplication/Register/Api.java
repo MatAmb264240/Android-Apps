@@ -2,11 +2,13 @@ package com.example.myapplication.Register;
 
 import com.example.myapplication.Login.LoginRequest;
 import com.example.myapplication.Login.LoginResponse;
+import com.example.myapplication.UserProfile.Watched.DefaultResponse;
 import com.example.myapplication.UserProfile.RefreshTokenRequest;
 import com.example.myapplication.UserProfile.RefreshTokenResponse;
 import com.example.myapplication.UserProfile.UserProfileRequest;
 import com.example.myapplication.UserProfile.UserProfileResponse;
 import com.example.myapplication.UserProfile.Watched.MoviesResponse;
+import com.example.myapplication.UserProfile.Watched.ReviewRequest;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -31,14 +33,16 @@ public interface Api {
     @POST("api/token/refresh/")
     Call<RefreshTokenResponse> refreshToken(@Body RefreshTokenRequest request);
 
-/*    @GET("api/profile/{username}/")
-    Call<SeriesResponse> getUserProfile(@Path("username") String username);*/
-
+    @POST("api/add_review/")
+    Call<DefaultResponse> addReview(@Body ReviewRequest request);
 
     @GET("api/movies_watched/{username}/")
     Call<MoviesResponse> getMoviesWatched(@Path("username") String username);
 
     @GET("api/series_watched/{username}/")
     Call<MoviesResponse> getSeriesWatched(@Path("username") String username);
+
+
+
 
 }
