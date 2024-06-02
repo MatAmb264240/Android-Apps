@@ -52,8 +52,10 @@ public class InfoResponse implements Serializable {
     private String awards;
     @SerializedName("Poster_url")
     @Expose
+    private String poster_url;
+    @SerializedName("Poster")
+    @Expose
     private String poster;
-
     @SerializedName("imdbID")
     @Expose
     private String imdbID;
@@ -201,6 +203,9 @@ public class InfoResponse implements Serializable {
     }
 
     public String getPoster() {
+        return poster_url;
+    }
+    public String getPosterURL() {
         return poster;
     }
 

@@ -9,6 +9,7 @@ import com.example.myapplication.UserProfile.UserProfileRequest;
 import com.example.myapplication.UserProfile.UserProfileResponse;
 import com.example.myapplication.UserProfile.Watched.MoviesResponse;
 import com.example.myapplication.UserProfile.Watched.ReviewRequest;
+import com.example.myapplication.UserProfile.Watched.ReviewResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -27,6 +28,10 @@ public interface Api {
             @Header("Authorization") String authorization,
             @Body UserProfileRequest request
     );
+
+    @GET("api/movie_details/{imdbID}/")
+    Call<ReviewResponse> getMovieDetails(@Path("imdbID") String imdbID);
+
     @POST("/api/token/")
     Call<LoginResponse> login(@Body LoginRequest request);
 
