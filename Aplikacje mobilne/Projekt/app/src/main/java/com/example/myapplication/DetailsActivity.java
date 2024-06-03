@@ -145,7 +145,7 @@ public class DetailsActivity extends AppCompatActivity {
         textView_movie_plot.setText(response.getPlot());
 
         try {
-            Picasso.get().load(response.getPoster()).into(imageView_movie_poster);
+            Picasso.get().load(response.getPosterURL()).into(imageView_movie_poster);
         } catch (Exception e) {
             e.printStackTrace();
         }
